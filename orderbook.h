@@ -2,18 +2,16 @@
 #include <set>
 #include <cstdint>
 
-class Order;
-
-class OrderComparator {
-    bool operator() (const Order& a, const Order& b) const;
-};
-
 class Order
 {
     public:
     uint32_t id;
     uint32_t qty;
     double price;
+
+    friend bool operator<(const Order& a, const Order& b);
+    friend bool operator>(const Order& a, const Order& b);
+    friend bool operator==(const Order& a, const Order& b);
 };
 
 class OrderBook
