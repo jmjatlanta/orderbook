@@ -15,13 +15,8 @@ class Order
     friend bool operator==(const Order<T>& a, const Order<T>& b);
 };
 
-class Bid : public Order<Bid>
-{
-};
-
-class Ask : public Order<Ask>
-{
-};
+class Bid : public Order<Bid> { };
+class Ask : public Order<Ask> { };
 
 class OrderBook
 {
