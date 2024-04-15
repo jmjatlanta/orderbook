@@ -10,6 +10,7 @@ if (NOT CMAKE_BUILD_TYPE)
 endif()
 
 add_subdirectory(test)
+add_subdirectory(bench)
 
 add_library(orderbook
     orderbook.cpp

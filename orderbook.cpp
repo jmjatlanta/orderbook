@@ -1,27 +1,27 @@
 #include "orderbook.h"
 
-bool operator<(const Order<Ask>& a, const Order<Ask>& b)
+bool operator<(const Ask& a, const Ask& b)
 {
     if (a.price == b.price)
 	return a.id < b.id;
     return a.price < b.price;
 }
 
-bool operator<(const Order<Bid>& a, const Order<Bid>& b)
+bool operator<(const Bid& a, const Bid& b)
 {
     if (a.price == b.price)
 	return a.id > b.id;
     return a.price < b.price;
 }
 
-bool operator>(const Order<Ask>& a, const Order<Ask>& b)
+bool operator>(const Ask& a, const Ask& b)
 {
     if (a.price == b.price)
 	return a.id > b.id;
     return a.price > b.price;
 }
 
-bool operator>(const Order<Bid>& a, const Order<Bid>& b)
+bool operator>(const Bid& a, const Bid& b)
 {
     if (a.price == b.price)
 	return a.id < b.id;
