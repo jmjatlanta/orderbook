@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.2)
 
 project(bench_orderbook)
 
-find_package(benchmark REQUIRED)
+#find_package(benchmark REQUIRED)
 
 add_executable(bench_orderbook
     bench.cpp

@@ -3,14 +3,6 @@
 
 #include "orderbook.h"
 
-template<class T>
-std::string to_string(const Order<T>& o)
-{
-    std::stringstream ss;
-    ss << "Id: " << o.id << " Qty: " << o.qty << " Price: " << o.price;
-    return ss.str();
-}
-
 std::vector<double> generateRandom(double mean, double stddev, uint32_t cnt)
 {
     std::default_random_engine eng;
@@ -23,18 +15,6 @@ std::vector<double> generateRandom(double mean, double stddev, uint32_t cnt)
     return retval;
 }
 
-std::string to_string(const OrderBook& ob)
-{
-    std::stringstream ss;
-    ss << "OrderBook -> Bids: \n";
-    for(auto o : ob.bids)
-	ss << " " << to_string(o) << "\n";
-    ss << "OrderBook -> Asks: \n";
-    for(auto o : ob.asks)
-	ss << " " << to_string(o) << "\n";
-    return ss.str();
-}
-
 TEST(basic, ctor)
 {
     OrderBook ob;
@@ -43,8 +23,8 @@ TEST(basic, ctor)
     {
 	Bid bid{i, i * 100, ((double)i + 100) / 100};
 	Ask ask{i + 100, i * 100, ((double)i + 200) / 100};
-	ob.bids.insert(bid);
-	ob.asks.insert(ask);
+	ob.add(bid);
+	ob.add(ask);
     }
     std::cout << to_string(ob) << "\n";
 }
@@ -56,9 +36,9 @@ TEST(basic, random)
     uint32_t counter = 0;
     std::for_each(prices.begin(), prices.end(), [&ob, &counter](double in) {
 			if (in > 100)
-			    ob.asks.insert( Ask{ counter, 100, std::round(in*100)/100 } );
+			    ob.add( Ask{ counter, 100, std::round(in*100)/100 } );
 			else
-			    ob.bids.insert( Bid{counter, 100, std::round(in*100)/100});
+			    ob.add( Bid{counter, 100, std::round(in*100)/100});
 			++counter;
 		  });
     std::cout << to_string(ob) << "\n";

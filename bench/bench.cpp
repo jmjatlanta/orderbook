@@ -14,8 +14,8 @@ Ask asks[sz];
 // the function to benchmark
 void add_orders(OrderBook& ob, const Bid& bid, const Ask& ask)
 {
-    ob.bids.insert(bid);
-    ob.asks.insert(ask);
+    ob.add(bid);
+    ob.add(ask);
 }
 
 // this function actually does the benchmarking

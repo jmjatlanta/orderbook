@@ -1,42 +1,51 @@
 #pragma once
-#include <set>
 #include <cstdint>
+#include <string>
 
-template <class T>
-class Order
-{
+class Bid
+{ 
     public:
-    Order() : id(0), qty(0), price(0.0) {}
-    Order(uint32_t i, uint32_t q, double p) : id(i), qty(q), price(p) {}
+    Bid() {}
+    Bid(uint32_t i, uint32_t q, double p) : id(i), qty(q), price(p) {}
+    friend bool operator<(const Bid& a, const Bid& b);
+    friend bool operator>(const Bid& a, const Bid& b);
+    friend bool operator==(const Bid& a, const Bid& b);
 
     uint32_t id;
     uint32_t qty;
     double price;
-
-    template<class Y>
-    friend bool operator==(const Order<Y>& a, const Order<Y>& b);
 };
-
-class Bid : public Order<Bid> 
+class Ask
 { 
     public:
-    Bid() : Order () {}
-    Bid(uint32_t i, uint32_t q, double p) : Order(i, q, p) {}
-    friend bool operator<(const Bid& a, const Bid& b);
-    friend bool operator>(const Bid& a, const Bid& b);
-};
-class Ask : public Order<Ask> 
-{ 
-    public:
-    Ask() : Order() {}
-    Ask(uint32_t i, uint32_t q, double p) : Order(i, q, p) {}
+    Ask() {}
+    Ask(uint32_t i, uint32_t q, double p) : id(i), qty(q), price(p) {}
     friend bool operator<(const Ask& a, const Ask& b);
     friend bool operator>(const Ask& a, const Ask& b);
+    friend bool operator==(const Ask& a, const Ask& b);
+
+    uint32_t id;
+    uint32_t qty;
+    double price;
 };
+
+class OrderBookImpl;
 
 class OrderBook
 {
     public:
-    std::set<Bid, std::greater<Bid>> bids;
-    std::set<Ask, std::less<Ask>> asks;
+    OrderBook();
+    ~OrderBook();
+
+    template<class T>
+    bool add(const T& in);
+    template<class T>
+    bool update(const T& in);
+    template <class T>
+    bool remove(const T& in);
+
+    friend std::string to_string(const OrderBook& in);
+
+    private:
+    OrderBookImpl* impl;
 };
